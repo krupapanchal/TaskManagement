@@ -40,7 +40,7 @@ namespace TaskManagement.Controllers
         public IActionResult Login([FromBody] Users users)
         {
             // Retrieve the user from the database based on the provided credentials
-            var user = _taskDbContext.Users.FirstOrDefault(u => u.Username == users.Username && u.PasswordHash == users.PasswordHash);
+            var user = _taskDbContext.Users.FirstOrDefault(u => u.Username == users.Username && u.Password == users.Password);
 
             // If no user is found, return an Unauthorized response
             if (user == null)

@@ -15,6 +15,8 @@ builder.Services.AddDbContext<TaskDbContext>(options => options.UseSqlServer(bui
                 .EnableSensitiveDataLogging()  // This will log parameter values (for debugging purposes)
                 .LogTo(Console.WriteLine, LogLevel.Information));  // Log SQL queries to the console);
 builder.Services.AddTransient<ITokenService, TokenService>();
+// Register TaskService
+builder.Services.AddScoped<TaskService>();
 
 //jwt Authentication Cofiguration
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

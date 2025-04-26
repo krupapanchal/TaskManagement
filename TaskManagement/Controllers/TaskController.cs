@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TaskManagement.Models;
+using TaskManagement.Services;
 using Task = TaskManagement.Models.Task;
 
 namespace TaskManagement.Controllers
@@ -17,13 +18,15 @@ namespace TaskManagement.Controllers
     public class TaskController : ControllerBase
     {
         private readonly TaskDbContext _context;
+        private readonly TaskService _taskService;
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskController"/> class.
         /// </summary>
         /// <param name="context">The database context.</param>
-        public TaskController(TaskDbContext context)
+        public TaskController(TaskDbContext context, TaskService taskService)
         {
             _context = context;
+            _taskService = taskService;
         }
 
 
@@ -135,6 +138,35 @@ namespace TaskManagement.Controllers
                 return NotFound();
 
             // Return an OK result with the tasks
+            return Ok(tasks);
+        }
+
+        //Task 3
+
+        [HttpGet("GetTask/{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+
+                var task = await _taskService.GetTaskAsync(id);
+                if (task == null)
+                    return NotFound();
+                return Ok(task);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+        }
+
+
+        [HttpGet("GetAllTasks")]
+        public async Task<IActionResult> GetAll()
+        {
+            var tasks = await _taskService.GetAllTasksAsync();
             return Ok(tasks);
         }
     }
