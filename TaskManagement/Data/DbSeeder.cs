@@ -12,8 +12,8 @@ namespace TaskManagement.Data
                 var users = new List<Users>
                 {
                     new Users { Username = "admin", Password = "admin123", Role = Role.Admin },
-                    new Users { Username = "john", Password = "john123", Role = Role.User },
-                    new Users { Username = "jane", Password = "jane123", Role = Role.User }
+                    new Users { Username = "user", Password = "user123", Role = Role.User },
+                    new Users { Username = "zimozi", Password = "zimozi123", Role = Role.User }
                 };
                 context.Users.AddRange(users);
                 context.SaveChanges();

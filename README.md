@@ -13,6 +13,16 @@ A simple Task Management API built with ASP.NET Core and SQL Server, using JWT a
 - Postman (optional, for testing APIs)
 - Git
 
+
+## 🛠 Technologies Used
+
+- ASP.NET Core 8
+- Entity Framework Core
+- SQL Server
+- JWT Authentication
+- Swagger for API Documentation
+
+
 ## 🚀 Getting Started
 
 Follow these steps to set up the project locally:
@@ -31,7 +41,7 @@ cd TaskManagement
 
 ### 2. Import the Database
 
-Download the `.bak` file from the repository (or provided link) and restore it into your SQL Server.
+Copy the .bak file located at DbBackup/TaskMgt.bak from the project folder, and restore it into your SQL Server using SQL Server Management Studio (SSMS).
 
 **Steps to Restore:**
 - Open **SQL Server Management Studio (SSMS)**.
@@ -111,101 +121,150 @@ After authorization, you can access protected APIs like:
 
 | Role  | Username | Password |
 |:-----:|:--------:|:--------:|
-| Admin | admin    | Admin@123|
-| User  | user     | User@123 |
+| Admin | admin    | admin123|
+| User  | user     | user123 |
 
 > You can modify the seed data later based on your project needs.
 
----
 
-## 🛠 Technologies Used
-
-- ASP.NET Core 8
-- Entity Framework Core
-- SQL Server
-- JWT Authentication
-- Swagger for API Documentation
 
 📚 Task 2: Database Design Basics
 This document contains the database deliverables for the Task Management system.
 
-📦 Deliverables
-1. SQL or EF Core Migration Scripts
-Migration scripts are included to create tables like:
+	📦 Deliverables
+		1. SQL or EF Core Migration Scripts
+		Ans: Migration scripts are included to create tables like:
+				Users
+				Tasks
+				TaskAssign
+				TaskComments
+			Seeder is configured to automatically insert sample data (default users, roles, etc.) during the first run.
+			No manual data entry required after database setup.
 
-Users
-Tasks
-TaskAssign
-TaskComments
+		2. ER Diagram
+		Ans: A detailed ER diagram for the database design has been created.
+			You can view it here:
+			🔗 https://drive.google.com/file/d/1cGDKZhb0NOMniukpVablZo2UjLMk20QR/view
 
-Seeder is configured to automatically insert sample data (default users, roles, etc.) during the first run.
+			The diagram is created using dbdiagram.io and outlines the relationships between Users, Tasks, Task Assignments, and Task Comments.
 
-No manual data entry required after database setup.
+		3. Sample SQL Queries
+		Ans: Below are sample queries for common operations:
 
-2. ER Diagram
-A detailed ER diagram for the database design has been created.
+			🔎 Get All Tasks Assigned to a Specific User
 
-You can view it here:
+			SELECT * 
+			FROM Tasks t
+			JOIN TaskAssign ta ON t.Id = ta.TaskId
+			WHERE ta.UserId = 2;
 
-🔗 https://drive.google.com/file/d/1cGDKZhb0NOMniukpVablZo2UjLMk20QR/view
+			🔎 Get All Comments for a Specific Task
 
-The diagram is created using dbdiagram.io and outlines the relationships between Users, Tasks, Task Assignments, and Task Comments.
+			SELECT * 
+			FROM TaskComments
+			WHERE TaskId = 3;
 
-3. Sample SQL Queries
-Below are sample queries for common operations:
+			🗂️ Tables Overview
 
-🔎 Get All Tasks Assigned to a Specific User
+			Table Name	Description
+			Users	Stores user information (Admin/User)
+			Tasks	Stores tasks created in the system
+			TaskAssign	Maps tasks to assigned users
+			TaskComments	Stores comments on tasks
 
-SELECT * 
-FROM Tasks t
-JOIN TaskAssign ta ON t.Id = ta.TaskId
-WHERE ta.UserId = 2;
+			📖 Notes
+			Seeder: On the first application run, it inserts default admin and user accounts, example tasks, and example assignments.
 
-🔎 Get All Comments for a Specific Task
-
-SELECT * 
-FROM TaskComments
-WHERE TaskId = 3;
-
-🗂️ Tables Overview
-
-Table Name	Description
-Users	Stores user information (Admin/User)
-Tasks	Stores tasks created in the system
-TaskAssign	Maps tasks to assigned users
-TaskComments	Stores comments on tasks
-
-📖 Notes
-Seeder: On the first application run, it inserts default admin and user accounts, example tasks, and example assignments.
-
-Foreign Keys: Relationships are properly enforced between tables to maintain data integrity.
+			Foreign Keys: Relationships are properly enforced between tables to maintain data integrity.
 
 
 
 🐞 Task 3: Debugging & Code Fixing
-This document outlines the code fixes made to the Task Management project.
+	This document outlines the code fixes made to the Task Management project.
 
-📦 Deliverables
-1. Fixed Code File
-The fixed code files are already added to the project repository.
+	📦 Deliverables
+		1. Fixed Code File
+		Ans: The fixed code files are already added to the project repository.
 
-All identified issues have been resolved to ensure proper asynchronous behavior and improved error handling.
+			All identified issues have been resolved to ensure proper asynchronous behavior and improved error handling.
 
-2. Short Explanation of Changes
-Here’s a summary of the key fixes and improvements:
+		2. Short Explanation of Changes
+		Ans: Here’s a summary of the key fixes and improvements:
+
+			✅ Return Types	: Changed List<Task> to Task<List<Task>> and Task<Task> to Task<Models.Task> for async correctness.
+			✅ Await Usage : Added await before all async database calls to properly handle asynchronous execution.
+			✅ Method Naming : Renamed methods to add the Async suffix (e.g., GetTaskAsync, GetAllTasksAsync) following C# best practices.
+			✅ Error Handling: Wrapped database operations inside try-catch blocks to handle and throw detailed error messages.
+			
+			🧹 Summary of Improvements
+			Better Async Handling: Prevents blocking and improves application scalability.
+			Clean Code Standards: Improved method naming makes the code more readable and maintainable.
+			Robustness: Enhanced error management ensures easier debugging and more informative exceptions.
 
 
-Area	Change Description
-✅ Return Types	Changed List<Task> to Task<List<Task>> and Task<Task> to Task<Models.Task> for async correctness.
-✅ Await Usage	Added await before all async database calls to properly handle asynchronous execution.
-✅ Method Naming	Renamed methods to add the Async suffix (e.g., GetTaskAsync, GetAllTasksAsync) following C# best practices.
-✅ Error Handling	Wrapped database operations inside try-catch blocks to handle and throw detailed error messages.
-🧹 Summary of Improvements
-Better Async Handling: Prevents blocking and improves application scalability.
+📋Task 5. Unit Testing
+	Write unit tests to validate the core functionalities of the Task Management API, mainly focusing on:
 
-Clean Code Standards: Improved method naming makes the code more readable and maintainable.
+	Controller Methods (TaskController)
 
-Robustness: Enhanced error management ensures easier debugging and more informative exceptions.
+	📦 Deliverables:
+	1. Test Project Folder Structure
+
+		/TaskManagement.Tests
+		│
+		├── Controllers
+		│   └── TaskControllerTests.cs     // Unit tests for TaskController
+		│
+		├── Services
+		│   └── TaskServiceTests.cs        // (Optional) Unit tests for TaskService
+		│
+		├── Mocks
+		│   └── MockDbContext.cs           // (Optional) Helpers for mocking DbContext
+		│
+		├── TaskManagement.Tests.csproj    // Test project file (xUnit, Moq installed)
+		│
+		└── README.md                      // Instructions for running tests
+		
+	2. README.md (or comment inside the code)
+
+	# 🧪 TaskManagement.Tests
+
+	This project contains **unit tests** for the `TaskManagement` API, focusing on validating important controller and service methods.
+
+	---
+
+	## 🚀 How to Run the Tests
+
+	1. **Open the Solution**
+	   - Open `TaskManagement.sln` in **Visual Studio 2022+** 
+
+	2. **Install Required Packages** (if missing)
+	   - `xunit`
+	   - `moq`
+	   - `Microsoft.EntityFrameworkCore.InMemory`
+	   - `xunit.runner.visualstudio`
+
+	3. **Build the Solution**
+	   - Press `Ctrl + Shift + B` or right-click ➔ **Build**.
+
+	4. **Run Tests**
+	   - Open **Test Explorer** (Visual Studio: Test > Test Explorer).
+	   - Click **Run All Tests** or run individual tests.
+
+	🛠 Technologies Used
+
+		Tool
+		xUnit	
+			Testing framework
+		Moq	
+			Mocking services/dependencies
+		EF Core InMemory	
+			Simulated database for testing
+			
+	⚠️ Important Notes
+		Always mock services (e.g., ITaskService) rather than actual DbContext directly.
+		Use InMemory database to avoid hitting real database.
+		Cover both positive and negative scenarios (valid inputs, invalid inputs, error handling).
 
 
 
