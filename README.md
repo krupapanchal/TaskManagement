@@ -50,7 +50,7 @@ Copy the .bak file located at DbBackup/TaskMgt.bak from the project folder, and 
 - Select the `.bak` file you downloaded.
 - Follow the prompts to complete the restore.
 
-👉 Need help? Check this quick guide: [How to Restore a .bak File in SQL Server](#).
+👉 Need help? Check this quick guide: https://sqlbak.com/blog/complete-guide-to-restoring-sql-databases-from-bak-files-in-sql-server/
 
 ### 3. Update the Database Connection String
 
