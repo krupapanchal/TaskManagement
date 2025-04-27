@@ -269,7 +269,7 @@ This document contains the database deliverables for the Task Management system.
 
 ## 📽 Video Walkthrough
 
- https://www.loom.com/embed/65371e3bc5aa4cd9ae8a59f5a360b16e?sid=f47825b2-9b52-4111-b40f-19d40ad0fd4b
+ https://www.loom.com/share/65371e3bc5aa4cd9ae8a59f5a360b16e?sid=363c78d1-7f0f-4da9-a64f-8196887c10d5
 
 
 
